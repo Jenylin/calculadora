@@ -3,6 +3,8 @@ package tienda;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 public class JFrameTienda extends javax.swing.JFrame {
@@ -12,9 +14,9 @@ public class JFrameTienda extends javax.swing.JFrame {
     double subtotal = 0;
     double descuento = 0;
     double total = 0;
-    String productos[] = {"Manzana", "Naranja", "Platanos", "Lechuga", "Tomates", "Leche", "Queso", "Huevos", "Pollo",
+    String productos[] = {"Selecciona","Manzana", "Naranja", "Platanos", "Lechuga", "Tomates", "Leche", "Queso", "Huevos", "Pollo",
          "Jamon", "Jugo de manzana", "Café", "Té", "Pan de caja", "Galletas saladas", "Helado", "Galletas", "Servilletas"};
-    double precios[] = {45, 50, 37, 25, 19, 21.95, 38.40, 35, 92, 46.35, 26.20, 28.25, 15, 39.24, 17.40, 35.80, 20.35, 25.25};
+    double precios[] = {0,45, 50, 37, 25, 19, 21.95, 38.40, 35, 92, 46.35, 26.20, 28.25, 15, 39.24, 17.40, 35.80, 20.35, 25.25};
     DefaultTableModel modelo = new DefaultTableModel();
     ArrayList<Tienda> listaVentas = new ArrayList<Tienda>();
 
@@ -23,14 +25,14 @@ public class JFrameTienda extends javax.swing.JFrame {
         this.setTitle("Venta de productos");
         DefaultComboBoxModel items = new DefaultComboBoxModel(productos);
         cboproductos.setModel(items);
-        
         txtCantidad.setText("0");
         modelo.addColumn("Producto");
         modelo.addColumn("Precio");
         modelo.addColumn("Cantidad");
         modelo.addColumn("Importe");
+        ((DefaultTableCellRenderer)
+         jTable1.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
         actualizarTabla();
-
     }
     
     public void limpiarCampo(){
@@ -38,15 +40,12 @@ public class JFrameTienda extends javax.swing.JFrame {
         txtCantidad.setText("0");
         cboproductos.setSelectedIndex(0);
     }
-
     public void precio() {
         precio = precios[cboproductos.getSelectedIndex()];
-      //  cantidad=Integer.parseInt(txtCantidad.getText());
         lblPrecio.setText(moneda(precio));
     }
 
     public void actualizarTabla() {
-      
         while (modelo.getRowCount() > 0) {
             modelo.removeRow(0);
         }
@@ -71,7 +70,6 @@ public class JFrameTienda extends javax.swing.JFrame {
     public String moneda(double precio) {
         return "$ " + Math.round(precio * 100.0) / 100.0 + " MXN";
     }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -191,8 +189,12 @@ public class JFrameTienda extends javax.swing.JFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         precio();
-        
-        if (txtCantidad.getText().equals("0")) {
+        int opcion = cboproductos.getSelectedIndex();
+ 
+        if (opcion==0) {
+            JOptionPane.showMessageDialog(rootPane, "Por favor selecciona un producto");
+        }else{
+            if (txtCantidad.getText().equals("0")) {
             JOptionPane.showMessageDialog(null, "Ingresa una Cantidad");   
         }else{
             cantidad = Integer.parseInt(txtCantidad.getText());
@@ -210,36 +212,39 @@ public class JFrameTienda extends javax.swing.JFrame {
             limpiarCampo();
         }
         
+    }
+        
+        
     }//GEN-LAST:event_btnAgregarActionPerformed
 
-    
     private void cboproductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboproductosActionPerformed
-        precio();
-       
+        precio();  
     }//GEN-LAST:event_cboproductosActionPerformed
     
     private void txtCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantidadActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCantidadActionPerformed
 
+    String name;
+    
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
       int row = jTable1.getSelectedRow();
       String dato=String.valueOf(modelo.getValueAt(jTable1.getSelectedRow(),3));
-      
-     
      subtotal= subtotal- Double.parseDouble(dato);
      porcentaje();
       lblSubtotal.setText(moneda(subtotal));
       lblDescuento.setText(moneda(descuento));
       lblTotal.setText(moneda(total));
-
       modelo.removeRow(row);
-    
+      for(int i = 0; i < listaVentas.size()-1; i++) {
+            listaVentas.remove(row);
+        }
+     
     }//GEN-LAST:event_btnEliminarActionPerformed
-
+     
     public boolean nuevaVenta(Tienda n){   
        for (Tienda v : listaVentas){
-            if (v.getId()==n.getId()){
+            if (v.getId()==n.getId()){    
                 int nuevaCantidad=v.getCantidad()+n.getCantidad();
                 v.setCantidad(nuevaCantidad);
                 v.setImporte(v.getPrecio()*nuevaCantidad);
@@ -313,16 +318,16 @@ public class JFrameTienda extends javax.swing.JFrame {
     private void porcentaje() {
        if (subtotal <= 150) {
             descuento = subtotal * 0.03;
-            total = subtotal - descuento;
+            
         } else if (subtotal >= 151 && subtotal <= 300) {
             descuento = subtotal * 0.05;
-            total = subtotal - descuento;
+           
         } else if (subtotal >= 301 && subtotal <= 450) {
             descuento = subtotal * 0.10;
-            total = subtotal - descuento;
+          
         } else if (subtotal >= 451) {
             descuento = subtotal * 0.15;
-            total = subtotal - descuento;
-        }
+            
+        }total = subtotal - descuento;
     }
 }
