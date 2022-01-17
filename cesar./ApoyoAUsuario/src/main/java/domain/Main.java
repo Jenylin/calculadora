@@ -16,8 +16,8 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
-       setLocationRelativeTo(null);
-   
+        setLocationRelativeTo(null);
+
     }
 
     /**
@@ -101,14 +101,17 @@ public class Main extends javax.swing.JFrame {
 
     private void btnTablasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTablasActionPerformed
         // TODO add your handling code here:
-       
+        Tablas sn = new Tablas();
+        sn.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnTablasActionPerformed
 
     private void btnSumaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSumaActionPerformed
         // TODO add your handling code here:
         SerieN sn = new SerieN();
         sn.setVisible(true);
-        setLocationRelativeTo(null);
+        this.dispose();
+
     }//GEN-LAST:event_btnSumaActionPerformed
 
     /**
