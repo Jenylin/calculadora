@@ -63,7 +63,6 @@ public class ConvertidorJFrame extends javax.swing.JFrame {
 
         comboBoxDos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "USD", "MXN", "EUR" }));
 
-        cantidadIngresada.setText("Ingresar");
         cantidadIngresada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cantidadIngresadaActionPerformed(evt);
@@ -90,8 +89,8 @@ public class ConvertidorJFrame extends javax.swing.JFrame {
                 .addGap(45, 45, 45))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(37, 37, 37)
-                .addComponent(cantidadIngresada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addComponent(cantidadIngresada, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(comboBoxUno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -149,47 +148,53 @@ public class ConvertidorJFrame extends javax.swing.JFrame {
     double n = Double.parseDouble(this.cantidadIngresada.getText());
     double resultado = 0;
 
-        switch (monedaUno) {
-            case 0: 
-                    switch(monedaDos){
-                        case 0: //USD a USD
+         switch (monedaUno) {
+            case 0:
+                    if(monedaDos == 0){
+                            //USD a USD
                             resultado = n;
-                            this.labelResultado.setText("$ "+Double.toString(resultado));
-                        case 1: //USD a MXN
+                            this.labelResultado.setText(Double.toString(resultado)+" USD");
+                    }else if (monedaDos == 1){
+                            //USD a MXN
                             resultado =  20.34 * n;
-                            this.labelResultado.setText("$ "+Double.toString(resultado));
-                        case 2: //USD a EUR
+                            this.labelResultado.setText(Double.toString(resultado)+" MXN");
+                    }else if (monedaDos == 2){
+                            //USD a EUR
                             resultado =  0.87 * n;
-                            this.labelResultado.setText("$ "+Double.toString(resultado));
-                    break;
+                            this.labelResultado.setText(Double.toString(resultado)+" EUR");
                     }
+                    break;
             case 1:
-                    switch(monedaDos){
-                        case 0: //MXN a USD
+                    if (monedaDos == 0){
+                            //MXN a USD
                             resultado = n / 20.34;
-                            this.labelResultado.setText("$ "+Double.toString(resultado));
-                        case 1: //MXN a MXN
+                            this.labelResultado.setText(Double.toString(resultado)+" USD");
+                    }else if (monedaDos == 1){
+                            //MXN a MXN
                             resultado = n;
-                            this.labelResultado.setText("$ "+Double.toString(resultado));
-                        case 2: //MXN a EUR
+                            this.labelResultado.setText(Double.toString(resultado)+" MXN");
+                    }else if (monedaDos == 2){
+                            //MXN a EUR
                             resultado = 0.043 * n;
-                            this.labelResultado.setText("$ "+Double.toString(resultado));
-                    break;
+                            this.labelResultado.setText(Double.toString(resultado)+" EUR");
                     }
+                    break;
             case 2:
-                    switch(monedaDos){
-                        case 0: //EUR a USD
+                    if(monedaDos == 0){
+                            //EUR a USD
                             resultado = n / 0.87;
-                            this.labelResultado.setText("$ "+Double.toString(resultado));
-                        case 1: //EUR a MXN
+                            this.labelResultado.setText(Double.toString(resultado)+" USD");
+                    }else if (monedaDos == 1){
+                            //EUR a MXN
                             resultado = n / 0.043;
-                            this.labelResultado.setText("$ "+Double.toString(resultado));
-                        case 2: //EUR a EUR
+                            this.labelResultado.setText(Double.toString(resultado)+" MXN");
+                    }else if (monedaDos == 2){
+                            //EUR a EUR
                             resultado = n;
-                            this.labelResultado.setText("$ "+Double.toString(resultado));
-                    break;
+                            this.labelResultado.setText(Double.toString(resultado)+" EUR");
                     }
-            break;
+                   
+                    break;
             }
         
     }//GEN-LAST:event_btnConvertirActionPerformed
