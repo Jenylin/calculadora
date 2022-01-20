@@ -34,6 +34,8 @@ public class ApoyoUsuario extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(254, 169, 95));
+
         jLabel1.setText("APOYO A USUARIO");
 
         btnSumar.setText("Sumar");
